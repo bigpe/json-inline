@@ -1,5 +1,6 @@
 # JSON Inline
 #### Low code JSON to extract data in one line
+[![Codecov](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Codecov](https://codecov.io/gh/bigpe/json-inline/branch/master/graph/badge.svg?token=OSDQARO6JR)](https://codecov.io/gh/bigpe/json-inline)
 [![Build Status](https://travis-ci.com/bigpe/json-inline.svg?token=9PVJVxRxQ4uXFdey5v3k&branch=master)](https://travis-ci.com/bigpe/json-inline)
 [![Versions](https://img.shields.io/pypi/pyversions/json-inline.svg)](https://pypi.org/project/json-inline/)
