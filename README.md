@@ -1,4 +1,4 @@
-### [ENG] [RU](#ru)
+### __ENG__ [RU](#ru)
 
 ## Installation
 
@@ -22,7 +22,7 @@ pip install json-inline
 
 ## Usage
 
-### [RU] [ENG](#eng)
+### __RU__ [ENG](#eng)
 
 ## Установка
 
