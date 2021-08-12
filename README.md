@@ -1,7 +1,9 @@
 # JSON Inline
 #### Low code JSON to extract data in one line
-[![codecov](https://codecov.io/gh/bigpe/json-inline/branch/master/graph/badge.svg?token=OSDQARO6JR)](https://codecov.io/gh/bigpe/json-inline)
-
+[![Codecov](https://codecov.io/gh/bigpe/json-inline/branch/master/graph/badge.svg?token=OSDQARO6JR)](https://codecov.io/gh/bigpe/json-inline)
+[![Build Status](https://travis-ci.com/bigpe/json-inline.svg?token=9PVJVxRxQ4uXFdey5v3k&branch=master)](https://travis-ci.com/bigpe/json-inline)
+[![Versions](https://img.shields.io/pypi/pyversions/json-inline.svg)](https://pypi.org/project/json-inline/)
+[![Release](https://img.shields.io/github/release/bigpe/json-inline.svg)](https://github.com/bigpe/json-inline/releases)
 
 ### ENG
 [RU](#ru)
@@ -27,6 +29,112 @@ pip install json-inline
 
 
 ## Usage
+
+### Search in array by key and value:
+```python
+import json_inline
+
+test_struct = [
+    {
+        "fruit": "apple",
+        "yummy": "true"
+    },
+    {
+        "vegetable": "tomato",
+        "yummy": "false"
+    },
+    {
+        "vegetable": "cucumber",
+        "yummy": "false"
+    }
+]
+
+# Search first object's entry in array with key vegetable and value cucumber,
+# return value from yummy key
+json_inline.fetch(test_struct, '?vegetable:cucumber.yummy')
+
+# >>> "false"
+
+# Search first object's entry in array with key vegetable and value tomato
+json_inline.fetch(test_struct, '?vegetable:tomato')
+
+# >>> {"vegetable": "tomato", "yummy": "false"}
+```
+
+
+### Search in array by key:
+
+```python
+import json_inline
+
+test_struct = [
+    {
+        "animal": "cat"
+    },
+    {
+        "animal": "dog"
+    },
+    {
+        "plant": "tomato"
+    },
+    {
+        "thing": "book"
+    }
+]
+
+# Search first object's entry in array with key animal
+json_inline.fetch(test_struct, '?animal')
+
+# >>> {"animal": "cat"}
+
+# Search second object's entry in array with key animal
+json_inline.fetch(test_struct, '?animal#2')
+
+# >>> {"animal": "dog"}
+
+# Search second object's entry in array with key animal,
+# return value from animal key
+json_inline.fetch(test_struct, '?+animal#2')
+
+# >>> "dog"
+```
+
+### Nested navigation:
+
+```python
+import json_inline
+
+test_struct = [
+    {'item1': 'fail'},
+    {'item2': 'fail'},
+    {'item2': [
+        {'item4': 'fail'},
+        {'item4': 'fail'},
+        {'item5': [
+            {'item7': 'fail'},
+            {'item7': 'fail', 'item9': [
+                {'item10': 'fail'},
+                {'item10': 'fail'},
+                {'item10': 'fail'},
+                {'item10': 'fail'},
+                {'item10': 'success'},
+            ]},
+            {'item8': 'fail'},
+        ]},
+        {'item5': 'fail'},
+        {'item6': 'fail'},
+    ]},
+    {'item3': 'fail'}
+]
+
+# Movement variant used array index to reach needs value
+json_inline.fetch(test_struct, '?+item2#2.?+item5.?item7:fail#2.item9.#4.item10')
+
+# Stable variant used search by array instead index move
+json_inline.fetch(test_struct, '?+item2#2.?+item5.?item7:fail#2.item9.?item10:success.item10')
+
+# >>> "success"
+```
 
 ### RU
 [ENG](#eng)
