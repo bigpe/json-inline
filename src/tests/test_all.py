@@ -17,6 +17,19 @@ class JsonInlineTestCase(TestCase):
         result = json_inline.fetch(test_struct, fetch_rule)
         self.assertEqual(result, success)
 
+    def test_entrypoint_move_by_index(self):
+        success = 'success'
+        test_struct = [
+            [
+                [
+                    ['fail', success]
+                ]
+            ]
+        ]
+        fetch_rule = '#0.#0.#0.#1'
+        result = json_inline.fetch(test_struct, fetch_rule)
+        self.assertEqual(result, success)
+
     def test_list_search_by_key(self):
         success = 'success'
         test_struct = [
@@ -63,7 +76,7 @@ class JsonInlineTestCase(TestCase):
         result = json_inline.fetch(test_struct, fetch_rule)
         self.assertEqual(result, success)
 
-    def test_entrypoint_move_by_index(self):
+    def test_entrypoint_move_by_index_and_key(self):
         success = 'success'
         test_struct = [
             {'item1': 'fail'},
@@ -185,14 +198,14 @@ class JsonInlineTestCase(TestCase):
 
     def test_dict_move_to_not_exist_key(self):
         success = None
-        test_struct = [
-            {'item1': 'fail'},
-            {'item2': 'fail'},
-            {'item2': 'fail'},
-            {'item3': 'fail'}
-        ]
+        test_struct = {
+            'item1': 'fail',
+            'item2': [
+                {'item3': 'fail'}
+            ]
+        }
         # Try to find not exist key
-        fetch_rule = '?item1.item2'
+        fetch_rule = 'item2.#1.item4'
         result = json_inline.fetch(test_struct, fetch_rule)
         self.assertEqual(result, success)
 

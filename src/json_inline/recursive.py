@@ -32,27 +32,23 @@ def fetch(json_data: Union[dict, list], entrypoint_rule: Union[list, str]):
     return fetch(new_data, new_map_list)
 
 
-def recursive_dict(data: dict, map_list: list):
+def recursive_dict(data: dict, entrypoint_rule: list):
     new_map_list = []
-    temp_map_list = map_list
-    for i, m in enumerate(map_list):
+    temp_map_list = entrypoint_rule
+    for i, m in enumerate(entrypoint_rule):
         if str(m)[0] == '#':
             m = m.replace('#', '', 1)
         if type(m) == int or m.isdigit() or m[0] == '?':
             temp_map_list = temp_map_list[i:]
             break
         new_map_list.append(m)
-    try:
-        new_data = reduce(dict.get, new_map_list, data)
-    except TypeError:  # If trying to get not exist key
-        new_data = None
+    new_data = reduce(dict.get, new_map_list, data)
     return new_data, temp_map_list
 
 
-def recursive_list(data: list, map_list: list):
+def recursive_list(data: list, entrypoint_rule: list):
     new_map_list = []
-    temp_map_list = map_list
-    for i, m in enumerate(map_list):
+    for i, m in enumerate(entrypoint_rule):
         if str(m)[0] == '#':
             m = m.replace('#', '', 1)
         try:
@@ -60,7 +56,7 @@ def recursive_list(data: list, map_list: list):
         except ValueError:
             ...
         if type(m) != int:
-            temp_map_list = temp_map_list[i:]
+            entrypoint_rule = entrypoint_rule[i:]
             break
         new_map_list.append(m)
     for m in new_map_list:
@@ -68,5 +64,5 @@ def recursive_list(data: list, map_list: list):
             data = data[m]
         except IndexError:
             data = None
-    return data, temp_map_list
+    return data, entrypoint_rule
 
