@@ -1,18 +1,12 @@
-language: python
-python: 3.8
-
+os: linux
 dist: xenial
-sudo: required
-
-addons:
-  apt:
-    sources:
-      - deadsnakes
-    packages:
-      - python3.5
-      - python3.6
-      - python3.7
-      - pypy
+language: python
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
 
 install:
   - pip install tox
