@@ -7,6 +7,7 @@ from .search import search_in_list
 
 def fetch(json_data: Union[dict, list], entrypoint_rule: Union[list, str]):
     if isinstance(entrypoint_rule, str):
+        entrypoint_rule = entrypoint_rule.replace('\\.', ',,')
         entrypoint_rule = entrypoint_rule.split('.')
     new_map_list = entrypoint_rule[:]
     if isinstance(json_data, str):
@@ -41,6 +42,7 @@ def recursive_dict(data: dict, entrypoint_rule: list):
         if type(m) == int or m.isdigit() or m[0] == '?':
             temp_map_list = temp_map_list[i:]
             break
+        m = m.replace(',,', '.')
         new_map_list.append(m)
     try:  # Not Existed Key
         new_data = reduce(dict.get, new_map_list, data)

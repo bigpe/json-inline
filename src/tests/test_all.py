@@ -222,5 +222,16 @@ class JsonInlineTestCase(TestCase):
         result = json_inline.fetch(test_struct, fetch_rule)
         self.assertEqual(result, success)
 
+    def test_dict_move_to_key_with_dots(self):
+        success = 'success'
+        test_struct = {
+            'item1': 'fail',
+            'item2.item': {'item3': 'success'}
+        }
+        # Try to find not exist key
+        fetch_rule = 'item2\\.item.item3'
+        result = json_inline.fetch(test_struct, fetch_rule)
+        self.assertEqual(result, success)
+
 
 
