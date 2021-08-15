@@ -228,8 +228,46 @@ class JsonInlineTestCase(TestCase):
             'item1': 'fail',
             'item2.item': {'item3': 'success'}
         }
-        # Try to find not exist key
         fetch_rule = 'item2\\.item.item3'
+        result = json_inline.fetch(test_struct, fetch_rule)
+        self.assertEqual(result, success)
+
+    def test_search_by_key_wih_dots(self):
+        success = 'success'
+        test_struct = {
+            'item1': 'fail',
+            'item2': [
+                {'item4': 'fail'},
+                {'item3.item': 'item.item.item', 'result': 'success'}
+            ]
+        }
+        fetch_rule = 'item2.?item3\\.item.result'
+        result = json_inline.fetch(test_struct, fetch_rule)
+        self.assertEqual(result, success)
+
+    def test_search_by_value_wih_dots(self):
+        success = 'success'
+        test_struct = {
+            'item1': 'fail',
+            'item2': [
+                {'item4': 'fail'},
+                {'item3': 'item.item.item', 'result': 'success'}
+            ]
+        }
+        fetch_rule = 'item2.?item3:item\\.item\\.item.result'
+        result = json_inline.fetch(test_struct, fetch_rule)
+        self.assertEqual(result, success)
+
+    def test_search_by_key_value_wih_dots(self):
+        success = 'success'
+        test_struct = {
+            'item1': 'fail',
+            'item2': [
+                {'item4': 'fail'},
+                {'item3.item': 'item.item.item', 'result': 'success'}
+            ]
+        }
+        fetch_rule = 'item2.?item3\\.item:item\\.item\\.item.result'
         result = json_inline.fetch(test_struct, fetch_rule)
         self.assertEqual(result, success)
 

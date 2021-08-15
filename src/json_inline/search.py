@@ -5,6 +5,7 @@ def search_in_list(data: list, map_list: list):
         map_list[0] = map_list[0].replace('+', '', 1)
     entry_count_temp = map_list[0].split('#')
     key_value = map_list[0].split(':', 1)
+    print(key_value)
     if len(key_value) == 2:
         key, value = key_value
     else:
@@ -14,6 +15,8 @@ def search_in_list(data: list, map_list: list):
         key = key.split('#')[0]
     if '#' in value:
         value = value.split('#')[0]
+    key = key.replace(',,', '.')
+    value = value.replace(',,', '.')
     entry_count = 1
     if len(entry_count_temp) == 2 and entry_count_temp[1].isdigit():
         entry_count = int(entry_count_temp[1])
