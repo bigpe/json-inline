@@ -42,7 +42,10 @@ def recursive_dict(data: dict, entrypoint_rule: list):
             temp_map_list = temp_map_list[i:]
             break
         new_map_list.append(m)
-    new_data = reduce(dict.get, new_map_list, data)
+    try:  # Not Existed Key
+        new_data = reduce(dict.get, new_map_list, data)
+    except TypeError:
+        new_data = None
     return new_data, temp_map_list
 
 

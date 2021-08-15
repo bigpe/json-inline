@@ -209,5 +209,18 @@ class JsonInlineTestCase(TestCase):
         result = json_inline.fetch(test_struct, fetch_rule)
         self.assertEqual(result, success)
 
+    def test_dict_move_to_not_exist_key_deeper(self):
+        success = None
+        test_struct = {
+            'item1': 'fail',
+            'item2': [
+                {'item3': 'fail'}
+            ]
+        }
+        # Try to find not exist key
+        fetch_rule = 'item2.item4.item6'
+        result = json_inline.fetch(test_struct, fetch_rule)
+        self.assertEqual(result, success)
+
 
 
